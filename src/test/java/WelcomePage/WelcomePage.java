@@ -1,4 +1,4 @@
-package CommonLib;
+package WelcomePage;
 
 import java.net.MalformedURLException;
 
@@ -10,6 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import CommonLib.CommonLib;
 
 public class WelcomePage extends CommonLib{
 	
@@ -60,6 +62,32 @@ public class WelcomePage extends CommonLib{
 	
 		
 	}
+	
+	@Test
+    public static void welcomePageTextShowing() {
+	
+	
+	driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
+	
+	WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+	Welcome_page.until(ExpectedConditions
+			.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+	
+	
+	
+	String textwelcomeActual = driver.findElement(By.xpath("//div[@class='text-2xl text-neutral-100 text-center font-medium mb-4']")).getText();
+	System.out.println(textwelcomeActual);
+	
+	String textwelcomeExpected = "?Welcome";
+	
+	Assert.assertEquals(textwelcomeActual, textwelcomeExpected);
+	
+		
+	}
+	
+	
+	
+	
 	
 
 }
