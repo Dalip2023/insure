@@ -34,6 +34,24 @@ public class WelcomePage extends CommonLib {
 		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
 	}
 	
+	
+	// method to check desired url opened or not?
+	@Test
+	public static void welcomePageURLCheck() {
+
+		page_loaded();
+
+		String welcomePageTitleActual = driver.getCurrentUrl();
+
+		String welcomePageTitleExpected = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w";
+		
+		System.out.println(welcomePageTitleActual);
+
+		Assert.assertEquals(welcomePageTitleActual, welcomePageTitleExpected);
+
+	}
+	
+	// method to check page title
 	@Test
 	public static void welcomePageTitleCheck() {
 
@@ -48,6 +66,7 @@ public class WelcomePage extends CommonLib {
 	}
 	
 	
+	// method to check logo is present
 	@Test
 	public static void welcomePageLogoCheck() {
 
@@ -64,6 +83,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check verify help link is present.
 	@Test
 	public static void VerifyNeedHelpLink() {
 
@@ -77,6 +97,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check welcome page heading showing or not
 	@Test
 	public static void welcomePageTextShowing() {
 
