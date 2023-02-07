@@ -26,13 +26,18 @@ public class WelcomePage extends CommonLib {
 		CommonLib.quitDriver();
 	}
 
-	@Test
-	public static void welcomePageTitleCheck() {
-
+	
+	public static void page_loaded() {
 		driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
 
 		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
 		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+	}
+	
+	@Test
+	public static void welcomePageTitleCheck() {
+
+		page_loaded();
 
 		String welcomePageTitleActual = driver.getTitle();
 
@@ -41,11 +46,12 @@ public class WelcomePage extends CommonLib {
 		Assert.assertEquals(welcomePageTitleActual, welcomePageTitleExpected);
 
 	}
-
+	
+	
 	@Test
 	public static void welcomePageLogoCheck() {
 
-		driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
+		page_loaded();
 
 		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
 		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='Header Logo']")));
@@ -58,12 +64,10 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	@Test
 	public static void VerifyNeedHelpLink() {
 
-		driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
-
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+		page_loaded();
 
 		String NeedHelpTextActual = driver.findElement(By.xpath("//div[contains(text(),'Need help?')]")).getText();
 
@@ -76,10 +80,7 @@ public class WelcomePage extends CommonLib {
 	@Test
 	public static void welcomePageTextShowing() {
 
-		driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
-
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
+		page_loaded();
 
 		String textwelcomeActual = driver
 				.findElement(By.xpath("//div[@class='text-2xl text-neutral-100 text-center font-medium mb-4']"))
