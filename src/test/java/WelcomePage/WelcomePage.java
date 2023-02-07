@@ -82,7 +82,6 @@ public class WelcomePage extends CommonLib{
 	
 	Assert.assertEquals(textwelcomeActual, textwelcomeExpected);
 	
-		
 	}
 	
 	
