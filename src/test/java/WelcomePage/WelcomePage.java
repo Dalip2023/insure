@@ -45,8 +45,6 @@ public class WelcomePage extends CommonLib {
 
 		String welcomePageTitleExpected = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w";
 		
-		System.out.println(welcomePageTitleActual);
-
 		Assert.assertEquals(welcomePageTitleActual, welcomePageTitleExpected);
 
 	}
