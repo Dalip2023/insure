@@ -41,11 +41,11 @@ public class WelcomePage extends CommonLib {
 
 		page_loaded();
 
-		String welcomePageTitleActual = driver.getCurrentUrl();
+		String welcomePageActualURL = driver.getCurrentUrl();
 
-		String welcomePageTitleExpected = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w";
+		String welcomePageExpectedURL = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w";
 		
-		Assert.assertEquals(welcomePageTitleActual, welcomePageTitleExpected);
+		Assert.assertEquals(welcomePageActualURL, welcomePageExpectedURL);
 
 	}
 	
@@ -111,5 +111,20 @@ public class WelcomePage extends CommonLib {
 		Assert.assertEquals(textwelcomeActual, textwelcomeExpected);
 
 	}
+	
+	// method to check welcome page text below heading showing or not
+		@Test
+		public static void welcomePageTextbelowHeadingcheck() {
+
+			page_loaded();
+
+			String textwelcomebelowHeadingActual = driver
+					.findElement(By.xpath("//div[@class='text-center text-neutral-100 text-base font-normal']"))
+					.getText();
+			System.out.println(textwelcomebelowHeadingActual);
+
+			
+
+		}
 
 }
