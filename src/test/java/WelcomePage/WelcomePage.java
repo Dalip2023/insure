@@ -119,9 +119,35 @@ public class WelcomePage extends CommonLib {
 
 	}
 	
+	@Test
+	public static void welcomePageSubmitButtonWorking() throws InterruptedException {
+		
+		page_loaded();
+		
+		WebElement SubmitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+		SubmitButton.click();
+		
+		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]")));
+		
+		Thread.sleep(2000);
+		
+		
+		
+		String applicantPageActualURL = driver.getCurrentUrl();
+
+		String applicantPageExpectedURL = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8x";
+		
+		Assert.assertEquals(applicantPageActualURL, applicantPageExpectedURL);
+		
+		
+		String applicantPageTitleActual = driver.getTitle();
+
+		String applicantPageTitleExpected = "Applicant Type";
+
+		Assert.assertEquals(applicantPageTitleActual, applicantPageTitleExpected);
+		
+	}
 	
-		
-		
-		
 
 }
