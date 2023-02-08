@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import CommonLib.CommonLib;
 
+
 public class WelcomePage extends CommonLib {
 
 	@BeforeClass
@@ -95,36 +96,32 @@ public class WelcomePage extends CommonLib {
 
 	}
 
-	// method to check welcome page heading showing or not
+	// method to check welcome page heading and sub heading showing or not
 	@Test
-	public static void welcomePageTextShowing() {
+	public static void welcomePageElementsShowing() {
 
 		page_loaded();
 
 		String textwelcomeActual = driver
 				.findElement(By.xpath("//div[@class='text-2xl text-neutral-100 text-center font-medium mb-4']"))
 				.getText();
-		System.out.println(textwelcomeActual);
 
-		String textwelcomeExpected = "?Welcome";
-
-		Assert.assertEquals(textwelcomeActual, textwelcomeExpected);
+		String textwelcometextExpected = "Welcome";
+		String HeadingActual = textwelcomeActual.substring(2);
+		
+		Assert.assertEquals(HeadingActual,textwelcometextExpected);
+		
+		WebElement SubmitButton = driver.findElement(By.xpath("//button[@type='submit']"));
+		Boolean SubmitButtonShowing = SubmitButton.isDisplayed();
+		Boolean  SubmitButtonShowingExpected = true;
+		
+		Assert.assertEquals(SubmitButtonShowing, SubmitButtonShowingExpected);
 
 	}
 	
-	// method to check welcome page text below heading showing or not
-		@Test
-		public static void welcomePageTextbelowHeadingcheck() {
-
-			page_loaded();
-
-			String textwelcomebelowHeadingActual = driver
-					.findElement(By.xpath("//div[@class='text-center text-neutral-100 text-base font-normal']"))
-					.getText();
-			System.out.println(textwelcomebelowHeadingActual);
-
-			
-
-		}
+	
+		
+		
+		
 
 }
