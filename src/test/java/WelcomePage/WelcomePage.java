@@ -13,7 +13,6 @@ import org.testng.annotations.Test;
 
 import CommonLib.CommonLib;
 
-
 public class WelcomePage extends CommonLib {
 
 	@BeforeClass
@@ -27,15 +26,13 @@ public class WelcomePage extends CommonLib {
 		CommonLib.quitDriver();
 	}
 
-	
 	public static void page_loaded() {
 		driver.get("https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w");
 
 		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
 		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@type='submit']")));
 	}
-	
-	
+
 	// method to check desired url opened or not?
 	@Test
 	public static void welcomePageURLCheck() {
@@ -45,11 +42,11 @@ public class WelcomePage extends CommonLib {
 		String welcomePageActualURL = driver.getCurrentUrl();
 
 		String welcomePageExpectedURL = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8w";
-		
+
 		Assert.assertEquals(welcomePageActualURL, welcomePageExpectedURL);
 
 	}
-	
+
 	// method to check page title
 	@Test
 	public static void welcomePageTitleCheck() {
@@ -63,8 +60,7 @@ public class WelcomePage extends CommonLib {
 		Assert.assertEquals(welcomePageTitleActual, welcomePageTitleExpected);
 
 	}
-	
-	
+
 	// method to check logo is present
 	@Test
 	public static void welcomePageLogoCheck() {
@@ -108,46 +104,77 @@ public class WelcomePage extends CommonLib {
 
 		String textwelcometextExpected = "Welcome";
 		String HeadingActual = textwelcomeActual.substring(2);
-		
-		Assert.assertEquals(HeadingActual,textwelcometextExpected);
-		
+
+		Assert.assertEquals(HeadingActual, textwelcometextExpected);
+
 		WebElement SubmitButton = driver.findElement(By.xpath("//button[@type='submit']"));
 		Boolean SubmitButtonShowing = SubmitButton.isDisplayed();
-		Boolean  SubmitButtonShowingExpected = true;
-		
+		Boolean SubmitButtonShowingExpected = true;
+
 		Assert.assertEquals(SubmitButtonShowing, SubmitButtonShowingExpected);
 
 	}
-	
+
 	@Test
 	public static void welcomePageSubmitButtonWorking() throws InterruptedException {
-		
+
 		page_loaded();
-		
+
 		WebElement SubmitButton = driver.findElement(By.xpath("//button[@type='submit']"));
 		SubmitButton.click();
-		
+
 		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]")));
-		
+		Welcome_page.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]")));
+
 		Thread.sleep(2000);
-		
-		
-		
+
 		String applicantPageActualURL = driver.getCurrentUrl();
 
 		String applicantPageExpectedURL = "https://d3j8nuwp74eyml.cloudfront.net/5U5PU/S2xbn/UGFnZV8x";
-		
+
 		Assert.assertEquals(applicantPageActualURL, applicantPageExpectedURL);
-		
-		
+
 		String applicantPageTitleActual = driver.getTitle();
 
 		String applicantPageTitleExpected = "Applicant Type";
 
 		Assert.assertEquals(applicantPageTitleActual, applicantPageTitleExpected);
-		
+
 	}
-	
+
+	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" })
+	public static void applicantTypePageElmentsandvalidationCheck() throws InterruptedException {
+
+		String headingExpected = "Applicant type";
+
+		WebElement headingWeb_e = driver
+				.findElement(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]"));
+
+		String headingShowingActual = headingWeb_e.getText();
+
+		//System.out.println(headingShowingActual);
+
+		Assert.assertEquals(headingShowingActual, headingExpected);
+
+		driver.findElement(By.xpath("//div[contains(text(),'Employee')]")).isDisplayed();
+		
+		driver.findElement(By.xpath("//div[contains(text(),'Spouse')]")).isDisplayed();
+
+		driver.findElement(By.xpath("//div[@class='mr-1']")).click();
+
+		WebElement validationMessageApplicantPage_e = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']"));
+
+		String validationMessageApplicantPageActual = validationMessageApplicantPage_e.getText();
+
+		Thread.sleep(1000);
+
+		//System.out.println(validationMessageApplicantPage);
+		String validationMessageApplicantPageExpected = "Please make a selection";
+		
+		Assert.assertEquals(validationMessageApplicantPageActual, validationMessageApplicantPageExpected);
+		
+		}
 
 }
