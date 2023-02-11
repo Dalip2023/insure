@@ -1,6 +1,7 @@
-##Insure Assignment
+Insure Assignment
 
-This project was generated with selenium web driver 3.14 with TestNg Framework.
+
+This project was generated with Selenium web driver 3.14 with TestNg Framework.
 
 ## Build 
 
