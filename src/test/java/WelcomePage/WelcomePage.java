@@ -115,6 +115,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// Method to check welcome page submit button working.
 	@Test
 	public static void welcomePageSubmitButtonWorking() throws InterruptedException {
 
@@ -143,6 +144,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// Method to check page heading, web element and validation of applicantType.
 	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" })
 	public static void applicantTypePageElementsandvalidationCheck() throws InterruptedException {
 
