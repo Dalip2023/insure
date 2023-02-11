@@ -68,9 +68,11 @@ public class WelcomePage extends CommonLib {
 
 		WebElement logo = driver.findElement(By.xpath("//img[@alt='Header Logo']"));
 
-		Boolean logoPresent = logo.isDisplayed();
+		Boolean logoPresent_a = logo.isDisplayed();
 
-		System.out.println(logoPresent);
+		Boolean logoPresent_e = true;
+
+		Assert.assertEquals(logoPresent_a, logoPresent_e);
 
 	}
 
@@ -143,7 +145,9 @@ public class WelcomePage extends CommonLib {
 	public static void backbuttonshowing() {
 
 		Boolean SubmitButtonShowing_e = true;
-		Boolean SubmitButtonShowing_a = driver.findElement(By.xpath("//div[contains(@class,'flex items-center justify-center mt-12')]//button[contains(@type,'button')]")).isDisplayed();
+		Boolean SubmitButtonShowing_a = driver.findElement(By.xpath(
+				"//div[contains(@class,'flex items-center justify-center mt-12')]//button[contains(@type,'button')]"))
+				.isDisplayed();
 		Assert.assertEquals(SubmitButtonShowing_a, SubmitButtonShowing_e);
 
 	}
@@ -183,9 +187,62 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	@Test(dependsOnMethods = { "applicantTypePageElementsandvalidationCheck" }, priority = 9)
+	public static void applicantTypePageSubmission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//div[contains(text(),'Employee')]")).click();
+
+		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+		Welcome_page.until(
+				ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Supplemental Life')]")));
+
+		Thread.sleep(2000);
+
+	}
+
+	@Test(dependsOnMethods = { "applicantTypePageSubmission" }, priority = 10)
+	public static void productPageElementsandValidationCheck() throws InterruptedException {
+
+		String ProductPageHeading_a = driver.findElement(By.xpath("//div[@class='truncate !text-xl font-medium ']"))
+				.getText();
+
+		String productPageHeading_e = "Product";
+
+		Assert.assertEquals(ProductPageHeading_a, productPageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']//div[@class='flex items-center justify-center ']"))
+				.click();
+
+		String validationMessageProductPage_e = "Please make a selection";
+
+		String validationMessageProductPage_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']")).getText();
+
+		Assert.assertEquals(validationMessageProductPage_a, validationMessageProductPage_e);
+
+		Thread.sleep(2000);
+	}
+
+	@Test(dependsOnMethods = { "productPageElementsandValidationCheck" }, priority = 11)
+	public static void productPageSubmission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//div[contains(text(),'Supplemental Life')]")).click();
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+		Welcome_page
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[normalize-space()='First']")));
+
+		Thread.sleep(2000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
-	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
+	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
 	public static void reloadorRevisitContinueApplicationButton() throws InterruptedException {
 
 		Thread.sleep(1000);
@@ -203,7 +260,7 @@ public class WelcomePage extends CommonLib {
 		String SelectApplicationHeading = driver.findElement(By.xpath("//div[@class='text-2xl text-neutral-100']"))
 				.getText();
 		String SelectApplicationHeading_a = SelectApplicationHeading.substring(3);
-		
+
 		System.out.println(SelectApplicationHeading_a);
 
 		// continue button
@@ -222,7 +279,8 @@ public class WelcomePage extends CommonLib {
 
 	}
 
-	@Test(dependsOnMethods = { "reloadorRevisitContinueApplicationButton" }, priority = 10)
+	// @Test(dependsOnMethods = { "reloadorRevisitContinueApplicationButton" },
+	// priority = 10)
 	public static void reloadorRevisitStartNewApplicationButton() {
 
 		// new application button
@@ -233,7 +291,5 @@ public class WelcomePage extends CommonLib {
 		Assert.assertEquals(newApplicationbutton_showing_a, newApplicationbutton_showing_e);
 
 	}
-	
-	
 
 }
