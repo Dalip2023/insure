@@ -34,7 +34,7 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check desired url opened or not?
-	@Test
+	@Test(priority = 1)
 	public static void welcomePageURLCheck() {
 
 		page_loaded();
@@ -48,10 +48,8 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check page title
-	@Test
+	@Test(dependsOnMethods = { "welcomePageURLCheck" }, priority = 2)
 	public static void welcomePageTitleCheck() {
-
-		page_loaded();
 
 		String welcomePageTitleActual = driver.getTitle();
 
@@ -62,10 +60,8 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check logo is present
-	@Test
+	@Test(priority = 3)
 	public static void welcomePageLogoCheck() {
-
-		page_loaded();
 
 		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
 		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='Header Logo']")));
@@ -79,24 +75,20 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check verify help link is present.
-	@Test
+	@Test(priority = 4)
 	public static void VerifyNeedHelpLink() {
-
-		page_loaded();
 
 		String NeedHelpTextActual = driver.findElement(By.xpath("//div[contains(text(),'Need help?')]")).getText();
 
-		String NeedHelpTextExpected = "Need help";
+		String NeedHelpTextExpected = "Need help?";
 
 		Assert.assertEquals(NeedHelpTextActual, NeedHelpTextExpected);
 
 	}
 
-	// method to check welcome page heading and sub heading showing or not
-	@Test
+	// method to check welcome page heading
+	@Test(priority = 5)
 	public static void welcomePageElementsShowing() {
-
-		page_loaded();
 
 		String textwelcomeActual = driver
 				.findElement(By.xpath("//div[@class='text-2xl text-neutral-100 text-center font-medium mb-4']"))
@@ -116,10 +108,12 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// Method to check welcome page submit button working.
-	@Test
+	@Test(priority = 6)
 	public static void welcomePageSubmitButtonWorking() throws InterruptedException {
 
-		page_loaded();
+		// page_loaded();
+
+		Thread.sleep(2000);
 
 		WebElement SubmitButton = driver.findElement(By.xpath("//button[@type='submit']"));
 		SubmitButton.click();
@@ -144,8 +138,17 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 7)
+	public static void backbuttonshowing() {
+
+		Boolean SubmitButtonShowing_e = true;
+		Boolean SubmitButtonShowing_a = driver.findElement(By.xpath("//div[contains(@class,'flex items-center justify-center mt-12')]//button[contains(@type,'button')]")).isDisplayed();
+		Assert.assertEquals(SubmitButtonShowing_a, SubmitButtonShowing_e);
+
+	}
+
 	// Method to check page heading, web element and validation of applicantType.
-	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" })
+	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 8)
 	public static void applicantTypePageElementsandvalidationCheck() throws InterruptedException {
 
 		String headingExpected = "Applicant type";
@@ -155,12 +158,12 @@ public class WelcomePage extends CommonLib {
 
 		String headingShowingActual = headingWeb_e.getText();
 
-		//System.out.println(headingShowingActual);
+		// System.out.println(headingShowingActual);
 
 		Assert.assertEquals(headingShowingActual, headingExpected);
 
 		driver.findElement(By.xpath("//div[contains(text(),'Employee')]")).isDisplayed();
-		
+
 		driver.findElement(By.xpath("//div[contains(text(),'Spouse')]")).isDisplayed();
 
 		driver.findElement(By.xpath("//div[@class='mr-1']")).click();
@@ -172,11 +175,62 @@ public class WelcomePage extends CommonLib {
 
 		Thread.sleep(1000);
 
-		//System.out.println(validationMessageApplicantPage);
+		// System.out.println(validationMessageApplicantPage);
 		String validationMessageApplicantPageExpected = "Please make a selection";
-		
+
 		Assert.assertEquals(validationMessageApplicantPageActual, validationMessageApplicantPageExpected);
+
+	}
+
+	// Method to check continueApplicationButton and Start new application button
+	// showing on reload/ next visit or not
+	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
+	public static void reloadorRevisitContinueApplicationButton() throws InterruptedException {
+
+		Thread.sleep(1000);
+
+		driver.navigate().refresh();
+
+		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+		Welcome_page.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Continue application')]")));
+
+		Thread.sleep(2000);
+
+		// page heading
+		String SelectApplicationHeading_e = "Welcome Back";
+		String SelectApplicationHeading = driver.findElement(By.xpath("//div[@class='text-2xl text-neutral-100']"))
+				.getText();
+		String SelectApplicationHeading_a = SelectApplicationHeading.substring(3);
 		
-		}
+		System.out.println(SelectApplicationHeading_a);
+
+		// continue button
+		Boolean continuebutton_showing_a = driver
+				.findElement(By.xpath("//div[contains(text(),'Continue application')]")).isDisplayed();
+		Boolean continuebutton_showing_e = true;
+
+		// page title
+		String Expectedtitle_Selectapplication = "Select Application";
+		String actualTitle_selectapplication = driver.getTitle();
+
+		// Assertions
+		Assert.assertEquals(actualTitle_selectapplication, Expectedtitle_Selectapplication);
+		Assert.assertEquals(continuebutton_showing_a, continuebutton_showing_e);
+		Assert.assertEquals(SelectApplicationHeading_a, SelectApplicationHeading_e);
+
+	}
+
+	@Test(dependsOnMethods = { "reloadorRevisitContinueApplicationButton" }, priority = 10)
+	public static void reloadorRevisitStartNewApplicationButton() {
+
+		// new application button
+		Boolean newApplicationbutton_showing_a = driver
+				.findElement(By.xpath("// div[contains(text(),'Start a new application')]")).isDisplayed();
+		Boolean newApplicationbutton_showing_e = true;
+
+		Assert.assertEquals(newApplicationbutton_showing_a, newApplicationbutton_showing_e);
+
+	}
 
 }
