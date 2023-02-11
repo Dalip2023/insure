@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -193,8 +194,8 @@ public class WelcomePage extends CommonLib {
 
 		driver.findElement(By.xpath("//div[contains(text(),'Employee')]")).click();
 
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(
+		WebDriverWait product_page = new WebDriverWait(driver, 30);
+		product_page.until(
 				ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Supplemental Life')]")));
 
 		Thread.sleep(2000);
@@ -235,9 +236,8 @@ public class WelcomePage extends CommonLib {
 
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page
-				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[normalize-space()='First']")));
+		WebDriverWait name_page = new WebDriverWait(driver, 30);
+		name_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[normalize-space()='First']")));
 
 		Thread.sleep(2000);
 
@@ -296,8 +296,99 @@ public class WelcomePage extends CommonLib {
 
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+		WebDriverWait email_page = new WebDriverWait(driver, 30);
+		email_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check Email Page elements and validation check
+	@Test(dependsOnMethods = { "productPageSubmission" }, priority = 14)
+	public static void emailPageElementsandValidationCheck() throws InterruptedException {
+
+		String emailPageHeading_a = driver
+				.findElement(By.xpath("//div[@class='text-xl text-neutral-100 font-medium mb-8']")).getText();
+
+		String emailPageHeading_e = "Email";
+
+		Assert.assertEquals(emailPageHeading_a, emailPageHeading_e);
+
+		driver.findElement(By.xpath("//input[@name='answer']")).isDisplayed();
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		String validationMessageEmail_e = "Please fill this in";
+
+		String validationMessageEmail_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please fill this in']")).getText();
+
+		Assert.assertEquals(validationMessageEmail_a, validationMessageEmail_e);
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check Name Page submission check
+	@Test(dependsOnMethods = { "emailPageElementsandValidationCheck" }, priority = 15)
+	public static void emailPageSubmission() throws InterruptedException {
+
+		WebElement email_field = driver.findElement(By.xpath("//input[@name='answer']"));
+
+		email_field.sendKeys("dalip@test.com");
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait coverage_page = new WebDriverWait(driver, 30);
+		coverage_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='px-2']")));
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check coveragePage Elements and validations
+	@Test(dependsOnMethods = { "emailPageSubmission" }, priority = 16)
+	public static void coveragePageElementsCheck() throws InterruptedException {
+
+		driver.findElement(By.xpath("//div[@class='px-2']")).isDisplayed();
+
+		String coveragePageHeading_a = driver
+				.findElement(By.xpath("//div[@class='text-xl font-medium text-neutral-100 mb-8']")).getText();
+
+		String coveragePageHeading_e = "Select a coverage amount";
+
+		Assert.assertEquals(coveragePageHeading_a, coveragePageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagecoverage_e = "Select a coverage amount";
+
+		String validationMessagecoverage_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Select a coverage amount']")).getText();
+
+		Assert.assertEquals(validationMessagecoverage_a, validationMessagecoverage_e);
+
+	}
+
+	// method to check coverage page submission
+	@Test(dependsOnMethods = { "coveragePageElementsCheck" }, priority = 15)
+	public static void coveragePageSubmission() throws InterruptedException {
+
+		WebElement slider = driver.findElement(By.xpath("//div[@class='px-2']"));
+
+		// Using Action Class
+		Actions move = new Actions(driver);
+		move.moveToElement(slider).clickAndHold().moveByOffset(1, 10).release().perform();
+
+		// slider working
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait date_page = new WebDriverWait(driver, 30);
+		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='date']")));
 
 		Thread.sleep(2000);
 
