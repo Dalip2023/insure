@@ -187,6 +187,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check applicant Type Page submission
 	@Test(dependsOnMethods = { "applicantTypePageElementsandvalidationCheck" }, priority = 9)
 	public static void applicantTypePageSubmission() throws InterruptedException {
 
@@ -200,6 +201,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check product page elements and validation check
 	@Test(dependsOnMethods = { "applicantTypePageSubmission" }, priority = 10)
 	public static void productPageElementsandValidationCheck() throws InterruptedException {
 
@@ -223,6 +225,7 @@ public class WelcomePage extends CommonLib {
 		Thread.sleep(2000);
 	}
 
+	// method to check product page submission
 	@Test(dependsOnMethods = { "productPageElementsandValidationCheck" }, priority = 11)
 	public static void productPageSubmission() throws InterruptedException {
 
@@ -240,6 +243,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check Name Page elements and validation check
 	@Test(dependsOnMethods = { "productPageSubmission" }, priority = 12)
 	public static void namePageElementsandValidationCheck() throws InterruptedException {
 
@@ -274,6 +278,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check Name Page submission check
 	@Test(dependsOnMethods = { "namePageElementsandValidationCheck" }, priority = 13)
 	public static void namePageSubmission() throws InterruptedException {
 
