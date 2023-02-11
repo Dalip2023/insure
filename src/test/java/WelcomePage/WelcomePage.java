@@ -240,6 +240,64 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	@Test(dependsOnMethods = { "productPageSubmission" }, priority = 12)
+	public static void namePageElementsandValidationCheck() throws InterruptedException {
+
+		String namePageHeading_a = driver
+				.findElement(By.xpath("//div[@class='truncate !text-xl text-neutral-100 font-medium ']")).getText();
+
+		String namePageHeading_e = "Your name";
+
+		Assert.assertEquals(namePageHeading_a, namePageHeading_e);
+
+		driver.findElement(By.xpath("//label[normalize-space()='First']")).isDisplayed();
+
+		driver.findElement(By.xpath("//label[normalize-space()='Last']")).isDisplayed();
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		String validationMessageNamePagefname_e = "Please fill this in";
+		String validationMessageNamePagelname_e = "Please fill this in";
+
+		String validationMessageNamePagefname_a = driver
+				.findElement(By.xpath("//div[contains(@class,'grid grid-cols-2 gap-4')]//div[2]//div[1]//span[1]"))
+				.getText();
+
+		String validationMessageNamePagelname_a = driver
+				.findElement(By.xpath("//div[contains(@class,'grid grid-cols-2 gap-4')]//div[2]//div[1]//span[1]"))
+				.getText();
+
+		Assert.assertEquals(validationMessageNamePagefname_a, validationMessageNamePagefname_e);
+		Assert.assertEquals(validationMessageNamePagelname_a, validationMessageNamePagelname_e);
+
+		Thread.sleep(2000);
+
+	}
+
+	@Test(dependsOnMethods = { "namePageElementsandValidationCheck" }, priority = 13)
+	public static void namePageSubmission() throws InterruptedException {
+
+		WebElement fname_field = driver.findElement(By.xpath("//input[@id='first_name']"));
+
+		WebElement lname_field = driver.findElement(By.xpath("//input[@id='last_name']"));
+
+		fname_field.sendKeys("dalip");
+
+		Thread.sleep(1000);
+
+		lname_field.sendKeys("kumar");
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
+		Welcome_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+
+		Thread.sleep(2000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
