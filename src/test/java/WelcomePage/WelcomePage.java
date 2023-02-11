@@ -144,7 +144,7 @@ public class WelcomePage extends CommonLib {
 	}
 
 	@Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" })
-	public static void applicantTypePageElmentsandvalidationCheck() throws InterruptedException {
+	public static void applicantTypePageElementsandvalidationCheck() throws InterruptedException {
 
 		String headingExpected = "Applicant type";
 
