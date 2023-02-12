@@ -3,6 +3,7 @@ package WelcomePage;
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -847,11 +848,86 @@ public class WelcomePage extends CommonLib {
 
 		driver.findElement(By.xpath("//label[normalize-space()='No']")).click();
 
-		WebDriverWait question2_page = new WebDriverWait(driver, 30);
-		question2_page.until(
+		WebDriverWait review_page = new WebDriverWait(driver, 30);
+		review_page.until(
 				ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[normalize-space()='Applicant Type']")));
 
 		Thread.sleep(3000);
+
+	}
+
+	// method to check data in review application
+	@Test(dependsOnMethods = { "healthcarePage3Submission" }, priority = 37)
+	public static void checkDataReviewApplication() throws InterruptedException {
+
+		WebElement applicantType = driver.findElement(By.xpath("//div[normalize-space()='Employee']"));
+		String applicantTypeValue = applicantType.getText();
+
+		WebElement supplimentLife = driver.findElement(By.xpath("//div[normalize-space()='Supplemental Life']"));
+		String supplimentLifeValue = supplimentLife.getText();
+
+		WebElement name = driver.findElement(By.xpath("//div[normalize-space()='dalip kumar']"));
+		String nameValue = name.getText();
+
+		WebElement email = driver.findElement(By.xpath("//div[normalize-space()='dalip@test.com']"));
+		String emailValue = email.getText();
+
+		WebElement coverage = driver.findElement(By.xpath("//div[normalize-space()='250,000']"));
+		String coverageValue = coverage.getText();
+
+		WebElement dob = driver.findElement(By.xpath("//div[normalize-space()='11 - 18 - 1992']"));
+		String dobValue = dob.getText();
+
+		WebElement gender = driver.findElement(By.xpath("//div[normalize-space()='Male']"));
+		String genderValue = gender.getText();
+
+		WebElement phone = driver.findElement(By.xpath("//div[normalize-space()='(805) 418-6612']"));
+		String phoneValue = phone.getText();
+
+		WebElement address = driver
+				.findElement(By.xpath("//div[normalize-space()='test Street 99 test city, IN 11223']"));
+		String addressValue = address.getText();
+
+		System.out.println(applicantTypeValue);
+		System.out.println(supplimentLifeValue);
+		System.out.println(nameValue);
+		System.out.println(emailValue);
+		System.out.println(coverageValue);
+		System.out.println(dobValue);
+		System.out.println(genderValue);
+		System.out.println(phoneValue);
+		System.out.println(addressValue);
+
+		Thread.sleep(2000);
+
+		String applicantTypeValue_e = "Employee";
+		String supplimentLifeValue_e = "Supplemental Life";
+		String nameValue_e = "dalip kumar";
+		String emailValue_e = "dalip@test.com";
+		String coverageValue_e = "250,000";
+		String dobValue_e = "11 - 18 - 1992";
+		String genderValue_e = "Male";
+		String phoneValue_e = "(805) 418-6612";
+		String addressValue_e = "test Street 99 test city, IN 11223";
+
+		Assert.assertEquals(applicantTypeValue, applicantTypeValue_e);
+		Assert.assertEquals(supplimentLifeValue, supplimentLifeValue_e);
+		Assert.assertEquals(nameValue, nameValue_e);
+		Assert.assertEquals(emailValue, emailValue_e);
+		Assert.assertEquals(coverageValue, coverageValue_e);
+		Assert.assertEquals(dobValue, dobValue_e);
+		Assert.assertEquals(genderValue, genderValue_e);
+		Assert.assertEquals(phoneValue, phoneValue_e);
+		Assert.assertEquals(addressValue, addressValue_e);
+
+		Thread.sleep(2000);
+
+		// div[@class='text-sm whitespace-pre-wrap break-words']
+
+		WebElement lastelement = driver
+				.findElement(By.xpath("//div[@class='text-sm whitespace-pre-wrap break-words']"));
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", lastelement);
+		Thread.sleep(2000);
 
 	}
 
