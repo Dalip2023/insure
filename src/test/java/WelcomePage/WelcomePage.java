@@ -544,7 +544,7 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check address Page Elements and validations
-	@Test(dependsOnMethods = { "genderPageSubmission" }, priority = 24)
+	@Test(dependsOnMethods = { "phonePageSubmission" }, priority = 24)
 	public static void addressPageElementsCheck() throws InterruptedException {
 
 		String addressPageHeading_a = driver
@@ -634,6 +634,47 @@ public class WelcomePage extends CommonLib {
 		hw_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='height']")));
 
 		Thread.sleep(2000);
+
+	}
+
+	// method to check weight and height Page Elements and validations
+	@Test(dependsOnMethods = { "addressPageSubmission" }, priority = 27)
+	public static void weightHeightPageElementsCheck() throws InterruptedException {
+
+		String whPageHeading_a = driver
+				.findElement(By.xpath("/html/body/div[1]/div[1]/div/div[1]/div/div/div/div/form/div[1]")).getText();
+
+		String whPageHeading_e = "What is your height and weight?";
+
+		Assert.assertEquals(whPageHeading_a, whPageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessageHeight_e = "Please select one";
+		String validationMessageWeight_e = "Please fill this in";
+
+		String validationMessageHeight_a = driver.findElement(By.xpath("//span[normalize-space()='Please select one']"))
+				.getText();
+
+		String validationMessageWeight_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please fill this in']")).getText();
+
+		Assert.assertEquals(validationMessageHeight_a, validationMessageHeight_e);
+		Assert.assertEquals(validationMessageWeight_a, validationMessageWeight_e);
+
+		Thread.sleep(1000);
+
+		WebElement height_e = driver.findElement(By.xpath("//select[@id='height']"));
+
+		Select ddheight_e = new Select(height_e);
+
+		ddheight_e.selectByVisibleText("5'8\"");
+
+		driver.findElement(By.xpath("//input[@name='weight']")).sendKeys("198");
+
+		Thread.sleep(3000);
 
 	}
 
