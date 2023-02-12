@@ -433,8 +433,8 @@ public class WelcomePage extends CommonLib {
 		Thread.sleep(1000);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
-		WebDriverWait date_page = new WebDriverWait(driver, 30);
-		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Male')]")));
+		WebDriverWait gender_page = new WebDriverWait(driver, 30);
+		gender_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Male')]")));
 
 		Thread.sleep(2000);
 
@@ -476,8 +476,67 @@ public class WelcomePage extends CommonLib {
 
 		Thread.sleep(2000);
 
-		WebDriverWait date_page = new WebDriverWait(driver, 30);
-		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+		WebDriverWait phone_page = new WebDriverWait(driver, 30);
+		phone_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check phone Page Elements and validations
+	@Test(dependsOnMethods = { "genderPageSubmission" }, priority = 22)
+	public static void phonePageElementsCheck() throws InterruptedException {
+
+		String phonePageHeading_a = driver
+				.findElement(By.xpath("//div[@class='text-xl text-neutral-100 font-medium mb-8']")).getText();
+
+		String phonePageHeading_e = "Phone Number";
+
+		Assert.assertEquals(phonePageHeading_a, phonePageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagePhone_e = "Please fill this in";
+
+		String validationMessagePhone_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please fill this in']")).getText();
+
+		Assert.assertEquals(validationMessagePhone_a, validationMessagePhone_e);
+
+		WebElement phonefield = driver.findElement(By.xpath("//input[@name='answer']"));
+
+		phonefield.sendKeys("80");
+
+		String validationMessagePhonewrong_e = "Please use a valid number";
+
+		String validationMessagePhonewrong_a = driver
+				.findElement(By.xpath("// span[normalize-space()='Please use a valid number']")).getText();
+
+		Assert.assertEquals(validationMessagePhonewrong_a, validationMessagePhonewrong_e);
+
+	}
+
+	// method to check phone Page submission
+	@Test(dependsOnMethods = { "phonePageElementsCheck" }, priority = 23)
+	public static void phonePageSubmission() throws InterruptedException {
+
+		Thread.sleep(2000);
+
+		WebElement phonefield = driver.findElement(By.xpath("//input[@name='answer']"));
+
+		phonefield.clear();
+
+		phonefield.sendKeys("8054186612");
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait address_page = new WebDriverWait(driver, 30);
+		address_page.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//input[contains(@name,'isAuthReleaseAgree')]")));
 
 		Thread.sleep(2000);
 
