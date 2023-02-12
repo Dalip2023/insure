@@ -375,7 +375,7 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check coverage page submission
-	@Test(dependsOnMethods = { "coveragePageElementsCheck" }, priority = 15)
+	@Test(dependsOnMethods = { "coveragePageElementsCheck" }, priority = 17)
 	public static void coveragePageSubmission() throws InterruptedException {
 
 		WebElement slider = driver.findElement(By.xpath("//div[@class='px-2']"));
@@ -389,6 +389,52 @@ public class WelcomePage extends CommonLib {
 
 		WebDriverWait date_page = new WebDriverWait(driver, 30);
 		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='date']")));
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check datePage Elements and validations
+	@Test(dependsOnMethods = { "emailPageSubmission" }, priority = 18)
+	public static void datePageElementsCheck() throws InterruptedException {
+
+		driver.findElement(By.xpath("//input[@id='date']")).isDisplayed();
+
+		String datePageHeading_a = driver
+				.findElement(By.xpath("//div[@class='text-xl text-neutral-100 font-medium mb-8']")).getText();
+
+		String datePageHeading_e = "Date of Birth";
+
+		Assert.assertEquals(datePageHeading_a, datePageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagedate_e = "Please fill this in";
+
+		String validationMessagedate_a = driver
+				.findElement(By.xpath("//span[@class='text-red-500 text-sm font-normal']")).getText();
+
+		Assert.assertEquals(validationMessagedate_a, validationMessagedate_e);
+
+	}
+
+	// method to check date page submission
+	@Test(dependsOnMethods = { "datePageElementsCheck" }, priority = 19)
+	public static void datePageSubmission() throws InterruptedException {
+
+		WebElement date = driver.findElement(By.xpath("//input[@id='date']"));
+
+		date.sendKeys("11");
+		date.sendKeys("18");
+		date.sendKeys("1992");
+
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait date_page = new WebDriverWait(driver, 30);
+		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Male')]")));
 
 		Thread.sleep(2000);
 
