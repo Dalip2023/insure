@@ -678,6 +678,19 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check height weight page submission
+	@Test(dependsOnMethods = { "weightHeightPageElementsCheck" }, priority = 28)
+	public static void weightHeightPageSubmission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait question_page = new WebDriverWait(driver, 30);
+		question_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[normalize-space()='No']")));
+
+		Thread.sleep(3000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
