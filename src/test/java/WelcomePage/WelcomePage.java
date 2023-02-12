@@ -691,6 +691,45 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check question Page Elements and validations
+	@Test(dependsOnMethods = { "weightHeightPageSubmission" }, priority = 29)
+	public static void questionPageElementsCheck() throws InterruptedException {
+
+		String questionPageHeading_a = driver.findElement(By.xpath("//div[@class='text-neutral-100 mb-8']")).getText();
+
+		String questionPageHeading_e = "Are you currently taking any medication?";
+
+		Assert.assertEquals(questionPageHeading_a, questionPageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessageQuestion_e = "Please make a selection";
+
+		String validationMessageQuestion_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']")).getText();
+
+		Assert.assertEquals(validationMessageQuestion_a, validationMessageQuestion_e);
+
+		Thread.sleep(1000);
+
+	}
+
+	// method to check question page submission
+	@Test(dependsOnMethods = { "weightHeightPageSubmission" }, priority = 30)
+	public static void questionPageSubmission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//label[normalize-space()='No']")).click();
+
+		WebDriverWait question2_page = new WebDriverWait(driver, 30);
+		question2_page.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//label[normalize-space()='None of the above']")));
+
+		Thread.sleep(3000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
