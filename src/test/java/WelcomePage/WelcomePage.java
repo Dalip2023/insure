@@ -931,6 +931,29 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check review application page submission
+	@Test(dependsOnMethods = { "checkDataReviewApplication" }, priority = 38)
+	public static void reviewApplicationPageSubmission() throws InterruptedException {
+
+		WebElement fname = driver.findElement(By.xpath("//input[@id='first_name']"));
+
+		WebElement lname = driver.findElement(By.xpath("//input[@id='last_name']"));
+
+		fname.sendKeys("dalip");
+		Thread.sleep(1000);
+		lname.sendKeys("kumar");
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//button[contains(@type,'submit')]")).click();
+
+		WebDriverWait allcompleted_page = new WebDriverWait(driver, 30);
+		allcompleted_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='mb-8']")));
+
+		Thread.sleep(3000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
