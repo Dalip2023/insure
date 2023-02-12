@@ -440,6 +440,49 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check genderPage Elements and validations
+	@Test(dependsOnMethods = { "emailPageSubmission" }, priority = 20)
+	public static void genderPageElementsCheck() throws InterruptedException {
+
+		driver.findElement(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]")).isDisplayed();
+
+		String genderPageHeading_a = driver
+				.findElement(By.xpath("//div[contains(@class,'truncate !text-xl font-medium')]")).getText();
+
+		String genderPageHeading_e = "Gender";
+
+		Assert.assertEquals(genderPageHeading_a, genderPageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagegender_e = "Please make a selection";
+
+		String validationMessagegender_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']")).getText();
+
+		Assert.assertEquals(validationMessagegender_a, validationMessagegender_e);
+
+	}
+
+	// method to check gender page submission
+	@Test(dependsOnMethods = { "genderPageElementsCheck" }, priority = 21)
+	public static void genderPageSubmission() throws InterruptedException {
+
+		WebElement gender_m = driver.findElement(By.xpath("//input[@value='0']"));
+
+		gender_m.click();
+
+		Thread.sleep(2000);
+
+		WebDriverWait date_page = new WebDriverWait(driver, 30);
+		date_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@name='answer']")));
+
+		Thread.sleep(2000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
