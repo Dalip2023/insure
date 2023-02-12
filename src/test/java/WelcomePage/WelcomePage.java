@@ -808,9 +808,48 @@ public class WelcomePage extends CommonLib {
 
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
+		WebDriverWait health_page = new WebDriverWait(driver, 30);
+		health_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//label[normalize-space()='No']")));
+
+		Thread.sleep(3000);
+
+	}
+
+	// method to check healthcare Page Elements and validations
+	@Test(dependsOnMethods = { "questionPage3Submission" }, priority = 35)
+	public static void healthcarePageElementsCheck() throws InterruptedException {
+
+		String healthcarePageHeading_a = driver.findElement(By.xpath("//div[@class='text-neutral-100 mb-8']"))
+				.getText();
+
+		String healthcarePageHeading_e = "Have you consulted, been advised or been examined by any healthcare provider for any other medical reason within the last ten years, or as indicated above?";
+
+		Assert.assertEquals(healthcarePageHeading_a, healthcarePageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagehealth_e = "Please make a selection";
+
+		String validationMessagehealth_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']")).getText();
+
+		Assert.assertEquals(validationMessagehealth_a, validationMessagehealth_e);
+
+		Thread.sleep(1000);
+
+	}
+
+	// method to check health care page submission
+	@Test(dependsOnMethods = { "healthcarePageElementsCheck" }, priority = 36)
+	public static void healthcarePage3Submission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//label[normalize-space()='No']")).click();
+
 		WebDriverWait question2_page = new WebDriverWait(driver, 30);
-		question2_page.until(ExpectedConditions
-				.visibilityOfElementLocated(By.xpath("//label[normalize-space()='No']")));
+		question2_page.until(
+				ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[normalize-space()='Applicant Type']")));
 
 		Thread.sleep(3000);
 
