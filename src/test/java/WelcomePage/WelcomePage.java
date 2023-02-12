@@ -760,7 +760,7 @@ public class WelcomePage extends CommonLib {
 	}
 
 	// method to check question page 2 submission
-	@Test(dependsOnMethods = { "questionPage2ElementsCheck" }, priority = 30)
+	@Test(dependsOnMethods = { "questionPage2ElementsCheck" }, priority = 32)
 	public static void questionPage2Submission() throws InterruptedException {
 
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
@@ -768,6 +768,49 @@ public class WelcomePage extends CommonLib {
 		WebDriverWait question2_page = new WebDriverWait(driver, 30);
 		question2_page.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//label[normalize-space()='Kidney Disorder']")));
+
+		Thread.sleep(3000);
+
+	}
+
+	// method to check question Page 3 Elements and validations
+	@Test(dependsOnMethods = { "questionPage2Submission" }, priority = 33)
+	public static void questionPage3ElementsCheck() throws InterruptedException {
+
+		String questionPage3Heading_a = driver.findElement(By.xpath("//div[@class='text-neutral-100 mb-8']")).getText();
+
+		String questionPage3Heading_e = "In the past ten years, or as indicated below, have you been treated for, or been diagnosed by a member of the medical profession as having any of the following:";
+
+		Assert.assertEquals(questionPage3Heading_a, questionPage3Heading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessageQuestion3_e = "Please make a selection";
+
+		String validationMessageQuestion3_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please make a selection']")).getText();
+
+		Assert.assertEquals(validationMessageQuestion3_a, validationMessageQuestion3_e);
+
+		Thread.sleep(1000);
+
+		driver.findElement(By.xpath("//label[normalize-space()='None of the above']")).click();
+
+		Thread.sleep(1000);
+
+	}
+
+	// method to check question page 3 submission
+	@Test(dependsOnMethods = { "questionPage3ElementsCheck" }, priority = 34)
+	public static void questionPage3Submission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		WebDriverWait question2_page = new WebDriverWait(driver, 30);
+		question2_page.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//label[normalize-space()='No']")));
 
 		Thread.sleep(3000);
 
