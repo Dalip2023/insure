@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -537,6 +538,85 @@ public class WelcomePage extends CommonLib {
 		WebDriverWait address_page = new WebDriverWait(driver, 30);
 		address_page.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//input[contains(@name,'isAuthReleaseAgree')]")));
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check address Page Elements and validations
+	@Test(dependsOnMethods = { "genderPageSubmission" }, priority = 24)
+	public static void addressPageElementsCheck() throws InterruptedException {
+
+		String addressPageHeading_a = driver
+				.findElement(By.xpath("//div[@class='text-xl text-neutral-100 font-medium mb-8']")).getText();
+
+		String addressPageHeading_e = "Address";
+
+		Assert.assertEquals(addressPageHeading_a, addressPageHeading_e);
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(1000);
+
+		String validationMessagePhoneaddress_e = "Please fill this in";
+		String validationMessagePhoneconsent_e = "Please check the box to continue";
+		String validationMessagePhoneHippaNotice_e = "Please check the box to continue";
+
+		String validationMessagePhoneaddress_a = driver
+				.findElement(By.xpath("//span[normalize-space()='Please fill this in']")).getText();
+
+		String validationMessagePhoneconsent_a = driver.findElement(By.xpath(
+				"//div[@class='text-red-500 text-sm font-normal mb-2']//span[contains(text(),'Please check the box to continue')]"))
+				.getText();
+
+		String validationMessagePhoneHippaNotice_a = driver.findElement(By.xpath(
+				"//body/div[@id='__next']/div/div[@class='h-screen flex flex-col bg-white']/div[@class='flex-grow min-h-0 overflow-y-auto']/div[@class='pt-2 pb-24']/div[@class='max-w-lg mt-2 lg:mt-16 mx-auto pt-2']/div/div[@class='p-4']/form/div[@class='text-sm text-neutral-100']/div[@class='text-sm mt-12']/div[1]/span[1]"))
+				.getText();
+
+		Assert.assertEquals(validationMessagePhoneaddress_a, validationMessagePhoneaddress_e);
+		Assert.assertEquals(validationMessagePhoneconsent_a, validationMessagePhoneconsent_e);
+		Assert.assertEquals(validationMessagePhoneHippaNotice_a, validationMessagePhoneHippaNotice_e);
+
+		Thread.sleep(2000);
+
+	}
+
+	// method to check address page field data filling
+	@Test(dependsOnMethods = { "addressPageElementsCheck" }, priority = 25)
+	public static void addressPageFilldata() throws InterruptedException {
+
+		Thread.sleep(2000);
+
+		WebElement phonefield = driver
+				.findElement(By.xpath("//div[@class='underline cursor-pointer text-primary-main']"));
+
+		phonefield.click();
+
+		driver.findElement(By.xpath("//div[normalize-space()='Street']")).isDisplayed();
+
+		Thread.sleep(1000);
+
+		WebElement street_e = driver.findElement(By.xpath("//input[@name='address.street']"));
+
+		WebElement city_e = driver.findElement(By.xpath("//input[@name='address.city']"));
+
+		WebElement zipcode_e = driver.findElement(By.xpath("//input[@name='address.zipCode']"));
+
+		WebElement state_e = driver.findElement(By.xpath("//select[@id='state']"));
+
+		Select ddState_e = new Select(state_e);
+
+		ddState_e.selectByVisibleText("Indiana");
+
+		street_e.sendKeys("test Street 99");
+		city_e.sendKeys("test city");
+		zipcode_e.sendKeys("11223");
+
+		Thread.sleep(2000);
+
+		driver.findElement(By.xpath("//input[contains(@name,'isAuthReleaseAgree')]")).click();
+
+		driver.findElement(By.xpath("//input[contains(@name,'isConsentBusiness')]")).click();
 
 		Thread.sleep(2000);
 
