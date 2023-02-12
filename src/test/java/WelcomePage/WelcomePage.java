@@ -622,6 +622,21 @@ public class WelcomePage extends CommonLib {
 
 	}
 
+	// method to check address page submission
+	@Test(dependsOnMethods = { "addressPageFilldata" }, priority = 26)
+	public static void addressPageSubmission() throws InterruptedException {
+
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+		Thread.sleep(2000);
+
+		WebDriverWait hw_page = new WebDriverWait(driver, 30);
+		hw_page.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//select[@id='height']")));
+
+		Thread.sleep(2000);
+
+	}
+
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
 	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
