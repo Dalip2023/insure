@@ -956,15 +956,15 @@ public class WelcomePage extends CommonLib {
 
 	// Method to check continueApplicationButton and Start new application button
 	// showing on reload/ next visit or not
-	// @Test(dependsOnMethods = { "welcomePageSubmitButtonWorking" }, priority = 9)
+	@Test(dependsOnMethods = { "reviewApplicationPageSubmission" }, priority = 39)
 	public static void reloadorRevisitContinueApplicationButton() throws InterruptedException {
 
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 
 		driver.navigate().refresh();
 
-		WebDriverWait Welcome_page = new WebDriverWait(driver, 30);
-		Welcome_page.until(ExpectedConditions
+		WebDriverWait select_application = new WebDriverWait(driver, 30);
+		select_application.until(ExpectedConditions
 				.visibilityOfElementLocated(By.xpath("//div[contains(text(),'Continue application')]")));
 
 		Thread.sleep(2000);
@@ -993,8 +993,7 @@ public class WelcomePage extends CommonLib {
 
 	}
 
-	// @Test(dependsOnMethods = { "reloadorRevisitContinueApplicationButton" },
-	// priority = 10)
+	@Test(dependsOnMethods = { "reloadorRevisitContinueApplicationButton" }, priority = 40)
 	public static void reloadorRevisitStartNewApplicationButton() {
 
 		// new application button
