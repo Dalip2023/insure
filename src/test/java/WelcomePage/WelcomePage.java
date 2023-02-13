@@ -888,15 +888,15 @@ public class WelcomePage extends CommonLib {
 				.findElement(By.xpath("//div[normalize-space()='test Street 99 test city, IN 11223']"));
 		String addressValue = address.getText();
 
-		System.out.println(applicantTypeValue);
-		System.out.println(supplimentLifeValue);
-		System.out.println(nameValue);
-		System.out.println(emailValue);
-		System.out.println(coverageValue);
-		System.out.println(dobValue);
-		System.out.println(genderValue);
-		System.out.println(phoneValue);
-		System.out.println(addressValue);
+//		System.out.println(applicantTypeValue);
+//		System.out.println(supplimentLifeValue);
+//		System.out.println(nameValue);
+//		System.out.println(emailValue);
+//		System.out.println(coverageValue);
+//		System.out.println(dobValue);
+//		System.out.println(genderValue);
+//		System.out.println(phoneValue);
+//		System.out.println(addressValue);
 
 		Thread.sleep(2000);
 
