@@ -9,3 +9,7 @@ Update pom.xml and build.
 ## Running test
 
 Run testng.xml file as TestNg Suite
+
+## How to run Test Suite
+
+https://drive.google.com/file/d/1rl8NGkJCYtTueOD3Q61Wk5DhqVm1UrmG/view
