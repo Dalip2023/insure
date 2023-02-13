@@ -975,7 +975,7 @@ public class WelcomePage extends CommonLib {
 				.getText();
 		String SelectApplicationHeading_a = SelectApplicationHeading.substring(3);
 
-		System.out.println(SelectApplicationHeading_a);
+		// System.out.println(SelectApplicationHeading_a);
 
 		// continue button
 		Boolean continuebutton_showing_a = driver
